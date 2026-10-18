@@ -17,6 +17,12 @@ app.use((req, res, next) => {
 
 app.use(express.json({ limit: '64kb' }));
 app.use(express.text({ type: '*/*', limit: '64kb' }));
+
+/* keepalive-пинг: дешёвый, Telegram не дёргает */
+app.get('/ping', (req, res) => {
+  res.type('text/plain').send('pong ' + new Date().toISOString());
+});
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 function parseBody(req) {
@@ -58,4 +64,4 @@ app.get('/api/test', async (req, res) => {
   catch (e) { res.status(502).json({ ok: false, error: e.message }); }
 });
 
-app.listen(PORT, () => console.log('Слушаю http://localhost:' + PORT));
+app.listen(PORT, () => console.log('Слушаю ' + PORT));
