@@ -1,0 +1,8 @@
+{
+	email admin@{$DOMAIN}
+}
+
+{$DOMAIN} {
+	encode gzip
+	reverse_proxy app:3000
+}
